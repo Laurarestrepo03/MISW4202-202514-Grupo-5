@@ -24,7 +24,7 @@ def health_check():
 @app.route("/orders")
 def orders():
 
-    if random.random() >= 0.3:
+    if random.random() > 0.5:
     
         delay = random.uniform(30, 45)
         logger.warning(f"Simulating Failure: Delay for {delay:.2f} seconds")
