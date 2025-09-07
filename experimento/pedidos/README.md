@@ -1,6 +1,6 @@
 # 🚀 Experimento de Monitoreo Heartbeat - Táctica de Disponibilidad
 
-Este experimento demuestra la implementación de una **táctica de arquitectura de software** para mejorar la **disponibilidad** del sistema mediante el uso de un **monitor tipo heartbeat**.
+Este experimento demuestra la implementación de una **táctica de arquitectura de software** para mejorar la **disponibilidad** del sistema mediante el uso de un **monitor tipo heartbeat**, **ping**, **monitor**
 
 ## 📋 Tabla de Contenidos
 
@@ -23,8 +23,9 @@ El objetivo es implementar y demostrar cómo funciona una **táctica de monitore
 - ✅ Proporciona métricas de disponibilidad en tiempo real
 - ✅ Genera alertas automáticas cuando se detectan problemas
 - ✅ Mejora la capacidad de respuesta ante incidentes
+- ✅ Cantidad de errores detectados en la ejecucion
 
-## 🏗️ Arquitectura del Sistema
+## 🏗️ Arquitectura del Experimento
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
@@ -32,19 +33,13 @@ El objetivo es implementar y demostrar cómo funciona una **táctica de monitore
 │  (Dashboard)    │    │   (Monitor)     │    │   (Flask App)   │
 │  Puerto: 3000   │    │  Puerto: 9090   │    │  Puerto: 8000   │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
-         ▲                                              │
-         │               ┌─────────────────┐           │
-         └───────────────┤   MailPit       │◄──────────┘
-                         │ (SMTP Testing)  │
-                         │  Puerto: 8025   │
-                         └─────────────────┘
+      
 ```
 
 ### Flujo de Monitoreo Heartbeat:
 1. **Prometheus** envía requests cada 10 segundos a `/metrics` del servicio
 2. **Docker healthcheck** verifica `/health` cada 30 segundos
 3. **Grafana** visualiza métricas y genera alertas
-4. **MailPit** simula el envío de notificaciones por email
 
 ## ⚙️ Prerrequisitos
 
@@ -56,6 +51,8 @@ El objetivo es implementar y demostrar cómo funciona una **táctica de monitore
 | **Docker Compose** | 2.x+ | Orquestación de contenedores |
 | **Git** | 2.x+ | Control de versiones |
 | **curl** | 7.x+ | Pruebas de endpoints |
+
+Los comandos se deben ejecutar en Gitbash
 
 ### Verificación de Prerrequisitos
 
@@ -88,8 +85,7 @@ Asegúrate de que los siguientes puertos estén disponibles:
 | **3000** | Grafana | Dashboard de monitoreo |
 | **8000** | Flask App | Servicio de pedidos |
 | **9090** | Prometheus | Motor de métricas |
-| **1025** | MailPit SMTP | Servidor SMTP de prueba |
-| **8025** | MailPit Web | Interfaz web para emails |
+
 
 ```bash
 # Verificar puertos disponibles (Windows)
@@ -154,10 +150,6 @@ ls -la
 - **Credenciales**: admin/admin
 - **Función**: Visualiza métricas y alertas
 
-### 4. **MailPit (Notificaciones)**
-- **Imagen**: `axllent/mailpit`
-- **Puertos**: 1025 (SMTP), 8025 (Web)
-- **Función**: Simula envío de alertas por email
 
 ## 🔧 Ejecución del Experimento
 
@@ -196,10 +188,13 @@ curl http://localhost:8000/health
 # {"status":"healthy","timestamp":"2025-09-07T14:42:17.900702"}
 ```
 
-### 2. Probar Simulación de Fallos
+### 2. Probar Simulación de Fallos (Ejecutar experimento)
+Para ejecutar el comando hay que ejecutar el archivo **test_endpoint.sh**
+
+En caso de ejecutarlo manualmente se puede ejecutar con el siguiente comando bash que repite un ciclo 10 veces
 
 ```bash
-# Ejecutar múltiples requests (50% de probabilidad de fallo)
+# Ejecutar múltiples requests (50% de probabilidad de fallo). Si la persona quiere hacer una prueba mas larga se puede alterar el ciclo a > 10
 for i in {1..10}; do 
   echo "Request $i:"
   curl -s http://localhost:8000/orders | head -c 100
@@ -225,6 +220,10 @@ curl http://localhost:8000/metrics | grep flask_http_request_total
 
 ## 📈 Visualización y Monitoreo
 
+### Aclaracion sobre analisis de metricas
+Las metricas se visualizan por Graphana pero por su funcionamiento en caso de que dos errores 500 se repitan, no los va a contar como dos errores, sino como un error continuo. Por eso para analizar rigurosamente cada respuesta se debe tener en cuenta la respuesta como error 500 exactamente. 
+
+
 ### Acceso a las Interfaces
 
 1. **Prometheus** (Motor de métricas):
@@ -239,10 +238,6 @@ curl http://localhost:8000/metrics | grep flask_http_request_total
    - Usuario: `admin`
    - Contraseña: `admin`
 
-3. **MailPit** (Email testing):
-   - URL: http://localhost:8025
-   - Ver emails de alertas simulados
-
 ### Configurar Dashboard en Grafana
 
 1. Acceder a Grafana (http://localhost:3000)
@@ -252,6 +247,7 @@ curl http://localhost:8000/metrics | grep flask_http_request_total
 5. Importar el archivo del repositorio `dashboard_grafana.json`
 6. Pegar y hacer clic en **"Load"**
 7. Seleccionar en time range **last 5 minutes** mientras se ejecuta el experimento
+8. Para una visualizacion mas rigurosa se puede configurar en el time range la hora de inicio y hora de final del experimento para tener una visualizacion exacta
 
 
 ## 🛠️ Solución de Problemas
@@ -346,7 +342,7 @@ watch -n 5 'docker compose ps'
 - [Prometheus](https://prometheus.io/docs/) - Monitoreo y métricas
 - [Grafana](https://grafana.com/docs/) - Visualización
 - [Flask](https://flask.palletsprojects.com/) - Framework web Python
-- [MailPit](https://mailpit.axllent.org/) - Testing SMTP
+
 
 ### Enlaces Útiles
 
