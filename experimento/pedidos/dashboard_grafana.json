@@ -198,8 +198,8 @@
     "list": []
   },
   "time": {
-    "from": "2025-09-06T01:57:10.000Z",
-    "to": "2025-09-06T02:06:45.000Z"
+    "from": "now-5m",
+    "to": "now"
   },
   "timepicker": {
     "nowDelay": "1m"
