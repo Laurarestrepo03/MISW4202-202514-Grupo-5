@@ -13,7 +13,7 @@ Este experimento demuestra la implementación de una **táctica de arquitectura 
 - [🧪 Pruebas y Validación](#-pruebas-y-validación)
 - [📈 Visualización y Monitoreo](#-visualización-y-monitoreo)
 - [🛠️ Solución de Problemas](#️-solución-de-problemas)
-- [📽️ Video de evidencia](#️-video-de-evidencia)
+- [📽️ Video de Evidencia](#️-video-de-evidencia)
 - [📚 Referencias](#-referencias)
 
 ## 🎯 Objetivo del Experimento
@@ -30,7 +30,7 @@ El objetivo es implementar y demostrar cómo funciona una **táctica de monitore
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌──────────────────┐
-│   Grafana       │◄───┤   Prometheus    │◄───┤ Servicio |Pedidos│
+│   Grafana       │◄───┤   Prometheus    │◄───┤ Servicio|Pedidos │
 │  (Dashboard)    │    │   (Monitor)     │    │   (Flask App)    │
 │  Puerto: 3000   │    │  Puerto: 9090   │    │  Puerto: 8000    │
 └─────────────────┘    └─────────────────┘    └──────────────────┘
@@ -339,7 +339,7 @@ docker stats
 watch -n 5 'docker compose ps'
 ```
 
-## 📽️ Video de evidencia
+## 📽️ Video de Evidencia
 El video con la evidencia del experimento puede ser visto [aquí](https://www.youtube.com/watch?v=NShVUZKHbWw) o dando click a la imagen.
 
 <a href="https://www.youtube.com/watch?v=NShVUZKHbWw"> <img width="500" alt="image" src="https://github.com/user-attachments/assets/adadd742-4aa2-4e98-a68e-b614a9a7d431"/> </a>
