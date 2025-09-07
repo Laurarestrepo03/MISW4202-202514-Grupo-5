@@ -253,6 +253,7 @@ Las metricas se visualizan por Graphana pero por su funcionamiento en caso de qu
 7. Seleccionar en time range desde el valor impreso de `start_time` hasta **now** o el valor impreso de `end_time`
 8. Para una visualizacion mas rigurosa se puede configurar en el time range la hora de inicio y hora de final del experimento para tener una visualizacion exacta
 
+> Nota: si se configura `start_time` como el tiempo de inicio inmediatamente después de iniciar las peticiones, puede que el dashboard muestre un error de tiempo. Esto es por el delay que tiene Grafana, pero se soluciona después de unos momentos. 
 
 ## 🛠️ Solución de Problemas
 
