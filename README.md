@@ -342,8 +342,7 @@ watch -n 5 'docker compose ps'
 ## 📽️ Video de evidencia
 El video con la evidencia del experimento puede ser visto [aquí](https://www.youtube.com/watch?v=NShVUZKHbWw) o dando click a la imagen.
 
-<!--AGREGAR IMAGEN-->
-
+<a href="https://www.youtube.com/watch?v=NShVUZKHbWw"> <img width="500" alt="image" src="https://github.com/user-attachments/assets/adadd742-4aa2-4e98-a68e-b614a9a7d431"/> </a>
 
 ## 📚 Referencias
 
