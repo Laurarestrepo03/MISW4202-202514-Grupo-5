@@ -13,6 +13,7 @@ Este experimento demuestra la implementación de una **táctica de arquitectura 
 - [🧪 Pruebas y Validación](#-pruebas-y-validación)
 - [📈 Visualización y Monitoreo](#-visualización-y-monitoreo)
 - [🛠️ Solución de Problemas](#️-solución-de-problemas)
+- [📽️ Video de evidencia](#️-video-de-evidencia)
 - [📚 Referencias](#-referencias)
 
 ## 🎯 Objetivo del Experimento
@@ -28,11 +29,11 @@ El objetivo es implementar y demostrar cómo funciona una **táctica de monitore
 ## 🏗️ Arquitectura del Experimento
 
 ```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+┌─────────────────┐    ┌─────────────────┐    ┌──────────────────┐
 │   Grafana       │◄───┤   Prometheus    │◄───┤ Servicio |Pedidos│
-│  (Dashboard)    │    │   (Monitor)     │    │   (Flask App)   │
-│  Puerto: 3000   │    │  Puerto: 9090   │    │  Puerto: 8000   │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
+│  (Dashboard)    │    │   (Monitor)     │    │   (Flask App)    │
+│  Puerto: 3000   │    │  Puerto: 9090   │    │  Puerto: 8000    │
+└─────────────────┘    └─────────────────┘    └──────────────────┘
       
 ```
 
@@ -52,7 +53,7 @@ El objetivo es implementar y demostrar cómo funciona una **táctica de monitore
 | **Git** | 2.x+ | Control de versiones |
 | **curl** | 7.x+ | Pruebas de endpoints |
 
-Los comandos se deben ejecutar en Gitbash
+Los comandos se deben ejecutar en Gitbash si el sistema operativo es Windows
 
 ### Verificación de Prerrequisitos
 
@@ -194,13 +195,16 @@ Para ejecutar el comando hay que ejecutar el archivo **test_endpoint.sh**
 En caso de ejecutarlo manualmente se puede ejecutar con el siguiente comando bash que repite un ciclo 10 veces
 
 ```bash
-# Ejecutar múltiples requests (50% de probabilidad de fallo). Si la persona quiere hacer una prueba mas larga se puede alterar el ciclo a > 10
-for i in {1..10}; do 
-  echo "Request $i:"
-  curl -s http://localhost:8000/orders | head -c 100
-  echo -e "\n---"
-  sleep 1
+# Ejecutar múltiples requests. Si la persona quiere hacer una prueba mas larga se puede alterar el ciclo a > 10
+start_time=$(date +"%Y-%m-%d %H:%M:%S")
+echo "Start time: $start_time"
+for i in {1..1}; do
+  echo "Request $i"
+  time curl -w "HTTP Response Code: %{http_code}\n" http://localhost:8000/orders
+  echo "--"
 done
+end_time=$(date +"%Y-%m-%d %H:%M:%S")
+echo "End time: $end_time"
 ```
 
 **Respuestas Posibles:**
@@ -246,7 +250,7 @@ Las metricas se visualizan por Graphana pero por su funcionamiento en caso de qu
 4. Ir **Dashboards**, **New**→ **"Import"**
 5. Importar el archivo del repositorio `dashboard_grafana.json`
 6. Pegar y hacer clic en **"Load"**
-7. Seleccionar en time range **last 5 minutes** mientras se ejecuta el experimento
+7. Seleccionar en time range desde el valor impreso de `start_time` hasta **now** o el valor impreso de `end_time`
 8. Para una visualizacion mas rigurosa se puede configurar en el time range la hora de inicio y hora de final del experimento para tener una visualizacion exacta
 
 
@@ -333,6 +337,10 @@ docker stats
 # Verificar salud de contenedores
 watch -n 5 'docker compose ps'
 ```
+
+## 📽️ Video de evidencia
+<!--AGREGAR ENLANCE A VIDEO-->
+
 
 ## 📚 Referencias
 
