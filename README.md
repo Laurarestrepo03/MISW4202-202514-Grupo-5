@@ -340,7 +340,9 @@ watch -n 5 'docker compose ps'
 ```
 
 ## 📽️ Video de evidencia
-<!--AGREGAR ENLANCE A VIDEO-->
+El video con la evidencia del experimento puede ser visto [aquí](https://www.youtube.com/watch?v=NShVUZKHbWw) o dando click a la imagen.
+
+<!--AGREGAR IMAGEN-->
 
 
 ## 📚 Referencias
