@@ -15,12 +15,14 @@ dummy_orders = [
     {"order_id": 2, "customer": "Jane Smith", "items": [{"product": "Smartphone", "quantity": 1}], "total": 699.99, "status": "completed"},
     {"order_id": 3, "customer": "Bob Johnson", "items": [{"product": "Headphones", "quantity": 1}], "total": 149.99, "status": "shipped"}
 ]
-
+#Servicio de health check
 @app.route("/health")
 def health_check():
 
     return jsonify({"status": "healthy", "timestamp": datetime.now().isoformat()})
 
+#Servicio de pedidos. Tiene un 50% de probabilidad de retornar una respuesta exitosa
+#Para simular una respuesta fallida se realiza un delay y se retorna un status code de 500
 @app.route("/orders")
 def orders():
 
