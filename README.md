@@ -198,7 +198,7 @@ En caso de ejecutarlo manualmente se puede ejecutar con el siguiente comando bas
 # Ejecutar múltiples requests. Si la persona quiere hacer una prueba mas larga se puede alterar el ciclo a > 10
 start_time=$(date +"%Y-%m-%d %H:%M:%S")
 echo "Start time: $start_time"
-for i in {1..1}; do
+for i in {1..10}; do
   echo "Request $i"
   time curl -w "HTTP Response Code: %{http_code}\n" http://localhost:8000/orders
   echo "--"
