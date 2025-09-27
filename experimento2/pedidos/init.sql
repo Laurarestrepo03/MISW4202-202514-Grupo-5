@@ -1,8 +1,10 @@
 --Tabla pedidos que será auditada
 CREATE TABLE pedidos (pedido_id SERIAL PRIMARY KEY,nombre VARCHAR(100) NOT NULL,cantidad INT NOT NULL,precio FLOAT NOT NULL,fecha_pedido TIMESTAMP);
+GRANT ALL PRIVILEGES ON TABLE pedidos TO medy_supply_app;
 
 --Tabla de auditoria, en la que se guardarán todas las operaciones de inserción, actualización o eliminación de registros de la tabla pedidos
-CREATE TABLE audit_log (id SERIAL PRIMARY KEY, pedido_id INT, accion VARCHAR(100), usuario VARCHAR(200), message VARCHAR(100), fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE audit_log (id SERIAL PRIMARY KEY, pedido_id INT, accion VARCHAR(100), usuario VARCHAR(200), message VARCHAR(200), fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+GRANT ALL PRIVILEGES ON TABLE audit_log TO medy_supply_app;
 
 --Función que se ejecuta con el trigger. 
 --Inserta un registro en la tabla de auditoria especificando el tipo de operación que se realizó, el usuario que la realizó y el id del pedido
