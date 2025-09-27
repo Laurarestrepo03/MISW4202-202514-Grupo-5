@@ -1,0 +1,43 @@
+services:
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile-DB
+    ports:
+      - "5432:5432"
+    networks:
+      - monitoring
+    environment:
+      - POSTGRES_DB=medy_supply
+      - POSTGRES_USER=medy_supply_app
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+
+  pedidos:
+    build:
+      context: .
+      dockerfile: Dockerfile-APP
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=medy_supply_app
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=medy_supply
+    ports:
+      - "8000:8000"
+    networks:
+      - monitoring
+    restart: unless-stopped
+
+
+volumes:
+  postgres_data:
+
+networks:
+  monitoring:
+    driver: bridge
+    name: monitoring

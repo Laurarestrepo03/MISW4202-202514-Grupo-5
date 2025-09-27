@@ -1,4 +1,5 @@
 import logging
+import os
 from flask import Flask, request, jsonify
 from prometheus_flask_exporter import PrometheusMetrics
 import psycopg2
@@ -12,19 +13,14 @@ metrics = PrometheusMetrics(app)
 
 def get_db_connection():
     conn = psycopg2.connect(
-        host="localhost",
-        database="medy_supply",
-        user="medy_supply_app",
-        password="postgres",
-        port="5433"
+        host=os.environ.get('POSTGRES_HOST'),
+        database=os.environ.get('POSTGRES_DB'),
+        user=os.environ.get('POSTGRES_USER'),
+        password=os.environ.get('POSTGRES_PASSWORD'),
+        port=os.environ.get('POSTGRES_PORT')
     )
     return conn
 
-#Servicio de health check
-@app.route("/health")
-def health_check():
-
-    return jsonify({"status": "healthy", "timestamp": datetime.now().isoformat()})
 
 #Servicio para almacenar un pedido en la base de datos
 @app.route('/insertar_pedido', methods=['POST'])
