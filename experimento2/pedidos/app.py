@@ -41,5 +41,18 @@ def save_order():
     conn.close()
     return jsonify({"mensaje": "Pedido insertado"}), 201
 
+#Servicio de health check
+@app.route("/audit_result")
+def audit_result():
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute('SELECT COUNT(*) FROM pedidos;')
+    total_pedidos = cur.fetchone()[0]
+    cur.execute('SELECT COUNT(*) FROM audit_log;')
+    total_audit = cur.fetchone()[0]
+    cur.close()
+    conn.close()
+    return jsonify({'total_pedidos': total_pedidos,'total_audit':total_audit})
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8000, threaded=False)
