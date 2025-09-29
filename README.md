@@ -613,4 +613,4 @@ docker-compose down -v
 
 El video con la evidencia del experimento puede ser visto [aquí]() o dando click a la imagen.
 
-<a href=""> <img width="500" alt="image" src=""/> </a>
+<a href="https://www.youtube.com/watch?v=GTlQRYj3RX4"> <img width="500" alt="image" src="https://github.com/user-attachments/assets/3075583b-5be0-4448-97b6-11725029c1cb"/> </a>
