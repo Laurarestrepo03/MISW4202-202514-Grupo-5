@@ -1,0 +1,71 @@
+services:
+
+  database:
+    image: postgres:15
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: medisupply
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - monitoring
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  pedidos:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://postgres:root@postgres-db:5432/medisupply
+    networks:
+      - monitoring
+    restart: unless-stopped
+    depends_on:
+      - database
+    
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus-monitor
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    networks:
+      - monitoring
+    ports:
+      - "9090:9090"
+    restart: unless-stopped
+    depends_on:
+      - pedidos
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana-monitor
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SMTP_ENABLED=true
+      - GF_SMTP_HOST=smtp:1025
+      - GF_SMTP_FROM_ADDRESS=monitor@experimento.com
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+    networks:
+      - monitoring
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    depends_on:
+      - prometheus
+
+volumes:
+  postgres-data:
+  prometheus-data:
+  grafana-data:
+
+networks:
+  monitoring:
+    driver: bridge
+    name: monitoring

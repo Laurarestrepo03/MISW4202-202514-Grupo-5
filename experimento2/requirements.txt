@@ -1,0 +1,11 @@
+Flask
+gunicorn
+prometheus-flask-exporter
+psycopg2-binary 
+Flask-SQLAlchemy
+Flask-Migrate
+flask-restful
+flask-marshmallow
+marshmallow-sqlalchemy
+dotenv
+Werkzeug

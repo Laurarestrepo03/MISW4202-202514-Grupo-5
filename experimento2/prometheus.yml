@@ -1,0 +1,9 @@
+global:
+  scrape_interval: 15s
+scrape_configs:
+  - job_name: 'experimento_pedidos'
+    static_configs:
+      - targets: ['pedidos:8000']
+    scrape_interval: 15s
+    metrics_path: '/metrics'
+    scrape_timeout: 10s
