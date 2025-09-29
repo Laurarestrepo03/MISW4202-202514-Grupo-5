@@ -362,13 +362,232 @@ El video con la evidencia del experimento puede ser visto [aquí](https://www.yo
 
 ---
 
-## 🤝 Soporte
+# 🔍 Experimento 2 - Sistema de Auditoría con Base de Datos
 
-Si encuentras algún problema:
+Este segundo experimento demuestra la implementación de un **sistema de auditoría automática** usando **triggers de base de datos** para registrar todas las operaciones realizadas sobre los datos críticos del sistema.
 
-1. Revisa la sección de **Solución de Problemas**
-2. Verifica que cumples todos los **Prerrequisitos**
-3. Consulta los **logs** de los contenedores
-4. Asegúrate de estar en el **directorio correcto**
+## 🎯 Objetivo del Experimento 2
 
+El objetivo es implementar y demostrar cómo funciona un **sistema de auditoría automática** que:
+
+- ✅ Registra automáticamente todas las operaciones de inserción, actualización y eliminación
+- ✅ Mantiene un log de auditoría con información detallada de cada transacción
+- ✅ Proporciona trazabilidad completa de las operaciones realizadas
+- ✅ Permite consultar el historial de cambios en tiempo real
+- ✅ Mejora la seguridad y compliance del sistema
+
+## 🏗️ Arquitectura del Experimento 2
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌──────────────────┐
+│   Flask App     │◄───┤   PostgreSQL    │◄───┤  Trigger Function│
+│  (API REST)     │    │   (Database)    │    │  (audit_log_fn)  │
+│  Puerto: 8000   │    │  Puerto: 5432   │    │                  │
+└─────────────────┘    └─────────────────┘    └──────────────────┘
+         │                       │
+         └───────────────────────┼────────► audit_log (tabla)
+                                 │
+                                 └────────► pedidos (tabla)
+```
+
+### Flujo de Auditoría:
+1. **API REST** recibe petición POST para insertar pedido
+2. **PostgreSQL** ejecuta INSERT en tabla `pedidos`
+3. **Trigger automático** se activa y ejecuta función de auditoría
+4. **Función de auditoría** inserta registro en tabla `audit_log`
+5. **API REST** permite consultar estadísticas de auditoría
+
+## 📊 Componentes del Experimento 2
+
+### 1. **API de Pedidos (Flask)**
+- **Archivo**: `experimento2/pedidos/app.py`
+- **Puerto**: 8000
+- **Endpoints**:
+  - `POST /insertar_pedido` - Inserta un nuevo pedido en la base de datos
+  - `GET /audit_result` - Consulta estadísticas de pedidos y auditoría
+
+### 2. **Base de Datos (PostgreSQL)**
+- **Imagen**: `postgres:16`
+- **Puerto**: 5432
+- **Base de datos**: `medy_supply`
+- **Tablas principales**:
+  - `pedidos` - Almacena los pedidos del sistema
+  - `audit_log` - Registra todas las operaciones de auditoría
+
+### 3. **Sistema de Triggers**
+- **Trigger**: `pedidos_audit_trigger`
+- **Función**: `audit_log_pedidos_fn()`
+- **Activación**: AFTER INSERT, UPDATE, DELETE en tabla `pedidos`
+
+## 🚀 Ejecución del Experimento 2
+
+### Paso 1: Navegar al Directorio del Experimento 2
+
+```bash
+# Ir al directorio específico del experimento 2
+cd experimento2/pedidos
+```
+
+### Paso 2: Verificar Archivos del Proyecto
+
+```bash
+# Listar archivos del proyecto
+ls -la
+
+# Debes ver estos archivos:
+# - docker-compose.yml (configuración de contenedores)
+# - app.py (aplicación Flask con API REST)
+# - Dockerfile-APP (imagen del servicio Flask)
+# - Dockerfile-DB (imagen personalizada de PostgreSQL)
+# - init.sql (script de inicialización de base de datos)
+# - requirements.txt (dependencias Python)
+```
+
+### Paso 3: Ejecutar el Experimento
+
+```bash
+# Construir y levantar todos los servicios
+docker-compose up --build
+
+# Verificar que los contenedores estén funcionando
+docker-compose ps
+```
+
+### Estado Esperado de los Contenedores
+
+```
+NAME               STATUS
+pedidos-db-1       Up X seconds (healthy)
+pedidos-pedidos-1  Up X seconds
+```
+
+## 🧪 Pruebas y Validación del Experimento 2
+
+### 1. Verificar Estado Inicial
+
+```bash
+# Consultar estado inicial de auditoría
+curl http://localhost:8000/audit_result
+
+# Respuesta esperada:
+# {"total_audit":0,"total_pedidos":0}
+```
+
+### 2. Insertar Pedidos de Prueba
+
+```bash
+# Insertar primer pedido
+curl -X POST http://localhost:8000/insertar_pedido \
+  -H "Content-Type: application/json" \
+  -d '{"nombre":"Aspirina","cantidad":50,"precio":15.99}'
+
+# Respuesta esperada:
+# {"mensaje":"Pedido insertado"}
+
+# Insertar segundo pedido
+curl -X POST http://localhost:8000/insertar_pedido \
+  -H "Content-Type: application/json" \
+  -d '{"nombre":"Ibuprofeno","cantidad":30,"precio":25.50}'
+
+# Insertar tercer pedido
+curl -X POST http://localhost:8000/insertar_pedido \
+  -H "Content-Type: application/json" \
+  -d '{"nombre":"Paracetamol","cantidad":100,"precio":12.75}'
+```
+
+### 3. Verificar Auditoría Automática
+
+```bash
+# Consultar estadísticas después de las inserciones
+curl http://localhost:8000/audit_result
+
+# Respuesta esperada:
+# {"total_audit":3,"total_pedidos":3}
+```
+
+### 4. Verificar Funcionamiento de Triggers
+
+La auditoría se ejecuta automáticamente. Cada inserción en la tabla `pedidos` genera un registro en `audit_log` con:
+
+- **pedido_id**: ID del pedido afectado
+- **accion**: Tipo de operación (INSERT, UPDATE, DELETE)
+- **usuario**: Usuario que realizó la operación
+- **message**: Mensaje descriptivo de la operación
+- **fecha**: Timestamp de cuando ocurrió la operación
+
+## 🔧 Estructura de Datos
+
+### Tabla `pedidos`
+```sql
+CREATE TABLE pedidos (
+    pedido_id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    cantidad INT NOT NULL,
+    precio FLOAT NOT NULL,
+    fecha_pedido TIMESTAMP
+);
+```
+
+### Tabla `audit_log`
+```sql
+CREATE TABLE audit_log (
+    id SERIAL PRIMARY KEY,
+    pedido_id INT,
+    accion VARCHAR(100),
+    usuario VARCHAR(200),
+    message VARCHAR(200),
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+## 📈 Análisis de Resultados
+
+### Métricas Clave del Experimento 2
+
+1. **Total de Pedidos**: Número de registros en la tabla `pedidos`
+2. **Total de Auditorías**: Número de registros en la tabla `audit_log`
+3. **Consistencia**: Verificar que cada operación genera su registro de auditoría
+4. **Trazabilidad**: Capacidad de rastrear todas las operaciones realizadas
+
+### Validación de la Auditoría
+
+```bash
+# Ejemplo de consulta de validación
+# Para verificar que cada pedido tiene su registro de auditoría:
+
+# 1. Insertar varios pedidos
+for i in {1..5}; do
+  curl -X POST http://localhost:8000/insertar_pedido \
+    -H "Content-Type: application/json" \
+    -d '{"nombre":"Producto'$i'","cantidad":'$((10+i))',"precio":'$((10+i))'.99}'
+  sleep 1
+done
+
+# 2. Verificar resultados
+curl http://localhost:8000/audit_result
+
+# Debe mostrar: {"total_audit":5,"total_pedidos":5}
+```
+
+## 📽️ Comando para Detener el Experimento 2
+
+```bash
+# Detener todos los servicios
+docker-compose down
+
+# Limpiar completamente (incluyendo volúmenes)
+docker-compose down -v
+```
+
+## 🔍 Verificación de Resultados del Experimento 2
+
+### Resultados Esperados
+
+1. ✅ **Inserción Exitosa**: Cada pedido se inserta correctamente en la base de datos
+2. ✅ **Auditoría Automática**: Cada inserción genera automáticamente un registro de auditoría
+3. ✅ **Consistencia de Datos**: El número de pedidos coincide con el número de registros de auditoría
+4. ✅ **Trazabilidad Completa**: Todos los cambios quedan registrados con timestamp y usuario
+5. ✅ **API Funcional**: Los endpoints responden correctamente y proporcionan estadísticas actualizadas
+
+---
 
