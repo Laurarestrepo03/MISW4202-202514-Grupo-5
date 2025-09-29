@@ -1,0 +1,158 @@
+{
+	"info": {
+		"_postman_id": "6eb002ab-852d-4962-857d-dd2eec363399",
+		"name": "Pedidos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17535481",
+		"_collection_link": "https://grey-flare-858966.postman.co/workspace/Experimento-2~1723d44e-eb37-4eeb-977a-57820ba5fbad/collection/17535481-6eb002ab-852d-4962-857d-dd2eec363399?action=share&source=collection_link&creator=17535481"
+	},
+	"item": [
+		{
+			"name": "Obtener pedidos",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/pedidos",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"pedidos"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Insertar pedido",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/pedidos",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"pedidos"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "Server",
+							"value": "gunicorn"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 29 Sep 2025 02:24:20 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "418"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 1,\n        \"total_pedido\": 2600,\n        \"comision\": 260,\n        \"usuario_creacion\": \"system\",\n        \"usuario_modificacion\": null,\n        \"fecha_creacion\": \"2025-09-29T02:22:11.119206\",\n        \"fecha_modificacion\": null,\n        \"cliente_id\": 1\n    },\n    {\n        \"id\": 2,\n        \"total_pedido\": 2000,\n        \"comision\": 200,\n        \"usuario_creacion\": \"vendedor2\",\n        \"usuario_modificacion\": null,\n        \"fecha_creacion\": \"2025-09-29T02:24:01.026661\",\n        \"fecha_modificacion\": null,\n        \"cliente_id\": 1\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Crear pedido",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/pedidos",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"pedidos"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "New Request",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/pedidos",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"pedidos"
+							]
+						}
+					},
+					"status": "CREATED",
+					"code": 201,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "Server",
+							"value": "gunicorn"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 29 Sep 2025 02:24:01 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "59"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Pedido creado correctamente\",\n    \"pedido_id\": 2\n}"
+				}
+			]
+		}
+	]
+}
