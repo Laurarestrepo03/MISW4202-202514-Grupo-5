@@ -1,4 +1,0 @@
-Flask
-prometheus-flask-exporter
-Werkzeug
-psycopg2
