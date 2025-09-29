@@ -1,20 +1,11 @@
-# 🚀 Experimento de Monitoreo Heartbeat - Táctica de Disponibilidad
+# Experimentos Grupo 5
+
+- [🚀 Experimento 1 - Disponibilidad](#-experimento-1---monitoreo-heartbeat)
+- [🔍 Experimento 2 - Seguridad](#-experimento-2---sistema-de-auditoría-con-base-de-datos)
+
+# 🚀 Experimento 1 - Monitoreo Heartbeat 
 
 Este experimento demuestra la implementación de una **táctica de arquitectura de software** para mejorar la **disponibilidad** del sistema mediante el uso de un **monitor tipo heartbeat**, **ping**, **monitor**
-
-## 📋 Tabla de Contenidos
-
-- [🎯 Objetivo del Experimento](#-objetivo-del-experimento)
-- [🏗️ Arquitectura del Sistema](#️-arquitectura-del-sistema)
-- [⚙️ Prerrequisitos](#️-prerrequisitos)
-- [🚀 Configuración del Entorno](#-configuración-del-entorno)
-- [📊 Componentes del Sistema](#-componentes-del-sistema)
-- [🔧 Ejecución del Experimento](#-ejecución-del-experimento)
-- [🧪 Pruebas y Validación](#-pruebas-y-validación)
-- [📈 Visualización y Monitoreo](#-visualización-y-monitoreo)
-- [🛠️ Solución de Problemas](#️-solución-de-problemas)
-- [📽️ Video de Evidencia](#️-video-de-evidencia)
-- [📚 Referencias](#-referencias)
 
 ## 🎯 Objetivo del Experimento
 
@@ -419,7 +410,7 @@ El objetivo es implementar y demostrar cómo funciona un **sistema de auditoría
 - **Función**: `audit_log_pedidos_fn()`
 - **Activación**: AFTER INSERT, UPDATE, DELETE en tabla `pedidos`
 
-## 🚀 Ejecución del Experimento 2
+## 🔧 Ejecución del Experimento 2
 
 ### Paso 1: Navegar al Directorio del Experimento 2
 
@@ -515,7 +506,7 @@ La auditoría se ejecuta automáticamente. Cada inserción en la tabla `pedidos`
 - **message**: Mensaje descriptivo de la operación
 - **fecha**: Timestamp de cuando ocurrió la operación
 
-## 🔧 Estructura de Datos
+## 🧱 Estructura de Datos
 
 ### Tabla `pedidos`
 ```sql
@@ -569,7 +560,7 @@ curl http://localhost:8000/audit_result
 # Debe mostrar: {"total_audit":5,"total_pedidos":5}
 ```
 
-## 📽️ Comando para Detener el Experimento 2
+## 🛑 Comando para Detener el Experimento 2
 
 ```bash
 # Detener todos los servicios
@@ -589,5 +580,10 @@ docker-compose down -v
 4. ✅ **Trazabilidad Completa**: Todos los cambios quedan registrados con timestamp y usuario
 5. ✅ **API Funcional**: Los endpoints responden correctamente y proporcionan estadísticas actualizadas
 
----
+## 📽️ Video de Evidencia
 
+<!--TODO: LINK E IMAGEN-->
+
+El video con la evidencia del experimento puede ser visto [aquí]() o dando click a la imagen.
+
+<a href=""> <img width="500" alt="image" src=""/> </a>
