@@ -7,6 +7,20 @@
 
 Este experimento demuestra la implementación de una **táctica de arquitectura de software** para mejorar la **disponibilidad** del sistema mediante el uso de un **monitor tipo heartbeat**, **ping**, **monitor**
 
+## 📋 Tabla de Contenidos
+
+- [🎯 Objetivo del Experimento](#-objetivo-del-experimento)
+- [🏗️ Arquitectura del Sistema](#️-arquitectura-del-sistema)
+- [⚙️ Prerrequisitos](#️-prerrequisitos)
+- [🚀 Configuración del Entorno](#-configuración-del-entorno)
+- [📊 Componentes del Sistema](#-componentes-del-sistema)
+- [🔧 Ejecución del Experimento](#-ejecución-del-experimento)
+- [🧪 Pruebas y Validación](#-pruebas-y-validación)
+- [📈 Visualización y Monitoreo](#-visualización-y-monitoreo)
+- [🛠️ Solución de Problemas](#️-solución-de-problemas)
+- [📽️ Video de Evidencia](#️-video-de-evidencia)
+- [📚 Referencias](#-referencias)
+
 ## 🎯 Objetivo del Experimento
 
 El objetivo es implementar y demostrar cómo funciona una **táctica de monitoreo heartbeat** que:
@@ -357,6 +371,19 @@ El video con la evidencia del experimento puede ser visto [aquí](https://www.yo
 
 Este segundo experimento demuestra la implementación de un **sistema de auditoría automática** usando **triggers de base de datos** para registrar todas las operaciones realizadas sobre los datos críticos del sistema.
 
+## 📋 Tabla de Contenidos
+
+- [🎯 Objetivo del Experimento 2](#-objetivo-del-experimento-2)
+- [🏗️ Arquitectura del Experimento 2](#️-arquitectura-del-experimento-2)
+- [📊 Componentes del Experimento 2](#-componentes-del-experimento-2)
+- [🔧 Ejecución del Experimento 2](#-ejecución-del-experimento-2)
+- [🧪 Pruebas y Validación del Experimento 2](#-pruebas-y-validación-del-experimento-2)
+- [🧱 Estructura de Datos](#-estructura-de-datos)
+- [📈 Análisis de Resultados](#-análisis-de-resultados)
+- [🛑 Comando para Detener el Experimento 2](#-comando-para-detener-el-experimento-2)
+- [🔍 Verificación de Resultados del Experimento 2](#-verificación-de-resultados-del-experimento-2)
+- [📽️ Video de Evidencia del Experimento 2](#️-video-de-evidencia-del-experimento-2)
+
 ## 🎯 Objetivo del Experimento 2
 
 El objetivo es implementar y demostrar cómo funciona un **sistema de auditoría automática** que:
@@ -580,7 +607,7 @@ docker-compose down -v
 4. ✅ **Trazabilidad Completa**: Todos los cambios quedan registrados con timestamp y usuario
 5. ✅ **API Funcional**: Los endpoints responden correctamente y proporcionan estadísticas actualizadas
 
-## 📽️ Video de Evidencia
+## 📽️ Video de Evidencia del Experimento 2
 
 <!--TODO: LINK E IMAGEN-->
 
